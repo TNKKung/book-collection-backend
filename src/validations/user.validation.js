@@ -1,34 +1,34 @@
-const Yup = require("yup");
+const joi = require("joi");
 
 const createUser = {
-  body: Yup.object().shape({
-    email: Yup.string().required().email(),
-    password: Yup.string().required(),
-    first_name: Yup.string().required(),
-    last_name: Yup.string().required(),
-    birth_date: Yup.string().required(),
-    tell: Yup.string().required(),
-    address: Yup.string().required(),
+  body: joi.object().keys({
+    email: joi.string().required().email(),
+    password: joi.string().required(),
+    first_name: joi.string().required(),
+    last_name: joi.string().required(),
+    birth_date: joi.string().required(),
+    tell: joi.string().required(),
+    address: joi.string().required(),
   }),
 };
 const getUsers = {
-  body: Yup.object().shape({
-    email: Yup.string().required().email(),
-    first_name: Yup.string().required(),
-    last_name: Yup.string().required(),
-    birth_date: Yup.string().required(),
-    tell: Yup.string().required(),
-    address: Yup.string().required(),
+  body: joi.object().keys({
+    email: joi.string().required().email(),
+    first_name: joi.string().required(),
+    last_name: joi.string().required(),
+    birth_date: joi.string().required(),
+    tell: joi.string().required(),
+    address: joi.string().required(),
   }),
 };
 
 const updateUser = {
-  body: Yup.object().shape({
-    first_name: Yup.string().required(),
-    last_name: Yup.string().required(),
-    birth_date: Yup.string().required(),
-    tell: Yup.string().required(),
-    address: Yup.string().required(),
+  body: joi.object().keys({
+    first_name: joi.string().required(),
+    last_name: joi.string().required(),
+    birth_date: joi.string().required(),
+    tell: joi.string().required(),
+    address: joi.string().required(),
   }),
 };
 

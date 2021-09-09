@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { toJSON } = require("./plungins");
+const { toJSON } = require("./plugins");
 
 const userSchema = new mongoose.Schema({
   first_name: { type: String, trim: true },
