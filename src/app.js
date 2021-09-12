@@ -1,24 +1,50 @@
 const express = require("express");
-const app = express();
-const mongoose = require("mongoose");
+const cors = require("cors");
 const passport = require("passport");
-
+const httpStatus = require("http-status");
 const config = require("./config/config");
-const validate = require("./middlewares/validate");
-const authValidation = require("./validations/auth.validation");
-const authController = require("./controllers/auth.controller");
-const {jwtStrategy} = require("./config/passport");
+const { jwtStrategy } = require("./config/passport");
+const { authLimiter } = require("./middlewares/rateLimiter");
+const routes = require("./routes/v1");
+const { errorConverter, errorHandler } = require("./middlewares/error");
+const ApiError = require("./utils/ApiError");
+const logger = require("./config/logger");
+const mongoose = require("mongoose");
 
-const port = config.PORT || 3003;
+const app = express();
 app.use(express.json());
+
+app.use(express.urlencoded({ extended: true }));
+
+app.use(cors());
+app.options("*", cors());
+
+// jwt authentication
 app.use(passport.initialize());
 passport.use("jwt", jwtStrategy);
 
-mongoose.connect(config.database);
+// limit repeated failed requests to auth endpoints
+if (config.env === "production") {
+  app.use("/v1/auth", authLimiter);
+}
 
-const router = express.Router();
-app.post('/', validate(authValidation.register), authController.register);
+// v1 api routes
+app.use("/v1", routes);
 
-app.listen(port, () => {
-  console.log("server is running port : ", port);
+// send back a 404 error for any unknown api request
+app.use((req, res, next) => {
+  next(new ApiError(httpStatus.NOT_FOUND, "Not found"));
+});
+
+// convert error to ApiError, if needed
+app.use(errorConverter);
+
+// handle error
+app.use(errorHandler);
+
+mongoose.connect(config.database).then(() => {
+  logger.info("Connected to MongoDB");
+  app.listen(config.port, () => {
+    logger.info(`Listening to port ${config.port}`);
+  });
 });

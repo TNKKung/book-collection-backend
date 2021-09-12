@@ -2,9 +2,11 @@ const httpStatus = require('http-status');
 const ApiError = require('../utils/ApiError');
 const catchAsync = require('../utils/catchAsync');
 const { userService } = require('../services');
+const logger = require("../config/logger");
 
 const createUser = catchAsync(async (req, res) => {
   const user = await userService.createUser(req.body);
+  logger.debug("hello world");
   res.status(httpStatus.CREATED).send(user);
 });
 
