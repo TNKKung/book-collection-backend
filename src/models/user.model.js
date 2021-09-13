@@ -14,7 +14,7 @@ const userSchema = new mongoose.Schema({
 
 userSchema.plugin(toJSON); //convert mongoose to JSON
 
-userSchema.statics.isUsernameTaken = async function (email, excludeUserId) {
+userSchema.statics.isEmailToken = async function (email, excludeUserId) {
   const user = await this.findOne({ email, _id: { $ne: excludeUserId } });
   return !!user;
 };
