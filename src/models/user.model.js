@@ -3,10 +3,10 @@ const { toJSON } = require("./plugins");
 const bcrypt = require("bcryptjs");
 
 const userSchema = new mongoose.Schema({
-  first_name: { type: String, trim: true },
-  last_name: { type: String, trim: true },
   email: { type: String, required: true, unique: true, trim: true },
   password: { type: String, required: true, trim: true, private: true },
+  first_name: { type: String, trim: true },
+  last_name: { type: String, trim: true },
   birth_date: { type: String, trim: true },
   tell: { type: String, trim: true },
   address: { type: String, trim: true },
