@@ -13,7 +13,7 @@ const bookSchema = new mongoose.Schema({
 
 bookSchema.plugin(toJSON); //convert mongoose to JSON
 
-bookSchema.statics.isEmailToken = async function (email, excludeUserId) {
+bookSchema.statics.isBook = async function (email, excludeUserId) {
   const user = await this.findOne({ email, _id: { $ne: excludeUserId } });
   return !!user;
 };
