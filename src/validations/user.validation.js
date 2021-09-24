@@ -9,16 +9,17 @@ const createUser = {
     birth_date: joi.string().required(),
     tell: joi.string().required(),
     address: joi.string().required(),
+    role: joi.string().required().valid("user", "admin"),
   }),
 };
-const getUsers = {
-  body: joi.object().keys({
-    email: joi.string().required().email(),
-    first_name: joi.string().required(),
-    last_name: joi.string().required(),
-    birth_date: joi.string().required(),
-    tell: joi.string().required(),
-    address: joi.string().required(),
+const getUser = {
+  query: joi.object().keys({
+    email: joi.string(),
+    first_name: joi.string(),
+    last_name: joi.string(),
+    birth_date: joi.string(),
+    tell: joi.string(),
+    address: joi.string(),
   }),
 };
 
@@ -35,5 +36,5 @@ const updateUser = {
 module.exports = {
   createUser,
   updateUser,
-  getUsers,
+  getUser,
 };

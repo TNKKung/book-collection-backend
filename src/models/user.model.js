@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const { toJSON } = require("./plugins");
 const bcrypt = require("bcryptjs");
+const { roles } = require("../config/roles");
 
 const userSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true, trim: true },
@@ -10,6 +11,7 @@ const userSchema = new mongoose.Schema({
   birth_date: { type: String, trim: true },
   tell: { type: String, trim: true },
   address: { type: String, trim: true },
+  role: { type: String, enum: roles, default: "user" },
 });
 
 userSchema.plugin(toJSON); //convert mongoose to JSON
