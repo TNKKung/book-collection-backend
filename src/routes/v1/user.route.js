@@ -6,6 +6,8 @@ const { userController } = require("../../controllers");
 
 const router = express.Router();
 
-router.get("/", validate(userValidation.getUser), userController.getUser)
+router
+  .route("/")
+  .get(validate(userValidation.getUser), userController.getUser);
 
 module.exports = router;
