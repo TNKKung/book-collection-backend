@@ -11,7 +11,6 @@ const createUser = catchAsync(async (req, res) => {
 });
 
 const getUser = catchAsync(async (req, res) => {
-  console.log(req.headers)
   const user = await userService.getUserById(req.params.userId);
   if (!user) {
     throw new ApiError(httpStatus.NOT_FOUND, "User not found");
@@ -20,7 +19,8 @@ const getUser = catchAsync(async (req, res) => {
 });
 
 const updateUser = catchAsync(async (req, res) => {
-  const user = await userService.updateUserById(req.user._id, req.body);
+  console.log("222")
+  const user = await userService.updateUserById(req.body._id, req.body);
   res.send(user);
 });
 

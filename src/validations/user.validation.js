@@ -25,6 +25,7 @@ const getUser = {
 
 const updateUser = {
   body: joi.object().keys({
+    _id : joi.string().required(),
     first_name: joi.string().required(),
     last_name: joi.string().required(),
     birth_date: joi.string().required(),
